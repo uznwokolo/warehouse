@@ -19,14 +19,7 @@ def show_stock():
 
 @route('/default')
 def default():
-    return '''
-        <form action="/additem" method="post">
-            Item ID: <input name="itemId" type="text" />
-            Item Name: <input name="itemName" type="text" />
-            Location: <input name="itemLocation" type="text" />
-            <input value="Submit" type="submit" />
-        </form>
-    '''
+   redirect('/stock') 
 
 @post('/additem')
 def addItem():
