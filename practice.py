@@ -1,11 +1,6 @@
-import sqlite3
+import sqlite3, time
 from bottle import route, run, template, post, request, redirect
 
-
-
-@route('/practice')
-def practice():
-    return "<h1>It only works when you practice it.</h1><h2>Don't give up. This is your dream.</h2>"
 
 @route('/stock')
 def show_stock():
@@ -19,7 +14,8 @@ def show_stock():
 
 @route('/default')
 def default():
-   redirect('/stock') 
+    time.sleep(4)
+    redirect('/stock') 
 
 @post('/additem')
 def addItem():
@@ -28,14 +24,22 @@ def addItem():
     itemLc = request.forms.get('itemLocation')
     
     db = sqlite3.connect('whstock.db')
-    db.execute("INSERT INTO whstock (id,name,location) VALUES (?, ?, ?)", (itemId, itemNm, itemLc))
-    db.commit()
-    
-    '''return  <p>An item has been added to warehouse stock</p> '''
-    redirect('/stock')
-    
+    try:
+        db.execute("INSERT INTO whstock (id,name,location) VALUES (?, ?, ?)", (itemId, itemNm, itemLc))
+        # If it fails due to an error, say primary key error, it skips to the except block
+        # db.commit doesn't run. The code in finally block runs afterward...
+        db.commit()
+        db.close()
+        redirect('/stock')
+        #If nothing goes wrong, redirect to the stock page 
+    except sqlite3.Error as e:
+        #print(e)
+        return template('sql_error')
+        #If there's an SQL error, redirect to the sql_error template
+    finally:
+        db.close()   
 
-run(host='localhost', reloader=True, port=8080, debug=True)
+run(host='0.0.0.0', reloader=True, port=8080, debug=True)
 
 
 class StockItem(object):

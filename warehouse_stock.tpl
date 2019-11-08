@@ -11,6 +11,7 @@ label, input, form, tr, th, td {
 </style>
 </head>
 
+<body>
 
 <form action="/additem" method="post">
     <div>
@@ -34,4 +35,6 @@ label, input, form, tr, th, td {
     </tr>
 %end
 </table>
+
+</body>
 
