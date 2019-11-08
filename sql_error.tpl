@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <head>
 <link href="https://fonts.googleapis.com/css?family=Play|Ubuntu+Condensed&display=swap" rel="stylesheet">
 <style>
