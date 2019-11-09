@@ -34,7 +34,7 @@ def addItem():
         #If nothing goes wrong, redirect to the stock page 
     except sqlite3.Error as e:
         #print(e)
-        return template('sql_error')
+        return template('sql_error', error=e)
         #If there's an SQL error, redirect to the sql_error template
     finally:
         db.close()   

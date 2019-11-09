@@ -6,16 +6,19 @@
 a {
   font-family: 'Ubuntu Condensed', sans-serif;
 }
-p {
+p, span {
   font-family: 'Play', sans-serif;    
+}
+span {
+    color: #CC3B36;
 }
 </style>
 </head>
 
 <body>
 
-<p>There is an issue with the database. Please try again.</p>
-<a href="/default">Click Here</a>
+<p>An error was detected: <span>{{error}}</span></p>
+<a href="/default">Click Here To Try Again</a>
 
 </body>
 
