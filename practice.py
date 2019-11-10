@@ -12,6 +12,7 @@ def show_stock():
     output = template('warehouse_stock', rows=data)
     return output
 
+@route('/home')
 @route('/default')
 def default():
     #time.sleep(4)
@@ -40,6 +41,31 @@ def addItem():
     finally:
         db.close()   
 
+@route('/jobs')
+def showJobs():
+	db = sqlite3.connect('whstock.db')
+	c = db.cursor()
+	c.execute("SELECT id,name FROM htxjobsites")
+	data2 = c.fetchall()
+	c.close()
+	output = template('show_jobsites.tpl', rows=data2)
+	return output
+
+@post('/addjobsite')
+def addJobsite():
+	jobName = request.forms.get('jobsiteName')
+	
+	db = sqlite3.connect('whstock.db')
+	try:
+		db.execute("INSERT INTO htxjobsites (name) VALUES (?)", (jobName,))
+		db.commit()
+		db.close()
+		redirect('/jobs')
+	except sqlite3.Error as e:
+		return template('sql_error', error=e)
+	finally:
+		db.close()
+	
 run(host='0.0.0.0', reloader=True, port=8080, debug=True)
 
 
