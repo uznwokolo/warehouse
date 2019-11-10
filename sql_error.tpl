@@ -3,14 +3,18 @@
 <head>
 <link href="https://fonts.googleapis.com/css?family=Play|Ubuntu+Condensed&display=swap" rel="stylesheet">
 <style>
+body {
+   background-color: beige;
+}
 a {
   font-family: 'Ubuntu Condensed', sans-serif;
+  color: darkslategray;
 }
 p, span {
   font-family: 'Play', sans-serif;    
 }
 span {
-    color: #CC3B36;
+    color: chocolate;
 }
 </style>
 </head>

@@ -33,20 +33,18 @@ label, input, form {
 
 <body>
 
-<form action="/additem" method="post">
+<form action="/addjobsite" method="post">
     <div>
-        <h2>Add Item to Warehouse Stock</h2>
-            <label>Item ID: <input name="itemId" type="text" /></label>
-            <label>Item Name: <input name="itemName" type="text" /></label>
-            <label>Location: <input name="itemLocation" type="text" />
+        <h2>Add A Jobsite</h2>
+            <label>Name: <input name="jobsiteName" type="text" /></label>
             <input value="Submit" type="submit" /></label>
     </div>
 </form>
         
 <hr/>
-<h2>Current stock in warehouse</h2>
+<h2>Current Jobsites</h2>
 <table class="houston">
-<tr><th>Item ID</th><th>Name</th><th>Location</th><th>Assigned To</th></tr>
+<tr><th>Jobsite ID</th><th>Name</th></tr>
 %for row in rows:
     <tr>
     %for col in row:

@@ -6,7 +6,7 @@ from bottle import route, run, template, post, request, redirect
 def show_stock():
     db = sqlite3.connect('whstock.db')
     c = db.cursor()
-    c.execute("SELECT id,name,location FROM whstock")
+    c.execute("SELECT id,name,location,assignedto FROM whstock")
     data = c.fetchall()
     c.close()
     output = template('warehouse_stock', rows=data)
@@ -14,7 +14,7 @@ def show_stock():
 
 @route('/default')
 def default():
-    time.sleep(4)
+    #time.sleep(4)
     redirect('/stock') 
 
 @post('/additem')
@@ -22,10 +22,11 @@ def addItem():
     itemId = request.forms.get('itemId')
     itemNm = request.forms.get('itemName')
     itemLc = request.forms.get('itemLocation')
+    base = "Warehouse"  #this may no longer be necessary as select statement in show_stock() has been corrected
     
     db = sqlite3.connect('whstock.db')
     try:
-        db.execute("INSERT INTO whstock (id,name,location) VALUES (?, ?, ?)", (itemId, itemNm, itemLc))
+        db.execute("INSERT INTO whstock (id,name,location,assignedto) VALUES (?, ?, ?,?)", (itemId, itemNm, itemLc,base))
         # If it fails due to an error, say primary key error, it skips to the except block
         # db.commit doesn't run. The code in finally block runs afterward...
         db.commit()
@@ -81,3 +82,17 @@ class Warehouse(object):
         for item in self.stock:
             print(item)
         #print(self.stock)
+    
+class Jobsite(object):
+    def __init__(self, jb_id, jb_name):
+        self.jobsite_id = jb_id
+        self.jobsite_name = jb_name
+
+    def get_jobsiteId(self):
+        return self.jobsite_id
+    
+    def get_jobsiteName(self):
+        return self.jobsite_name
+
+    def __repr__(self):
+        return f"{self.jobsite_id}|{self.jobsite_name}"
