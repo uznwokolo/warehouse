@@ -65,6 +65,22 @@ def addJobsite():
 		return template('sql_error', error=e)
 	finally:
 		db.close()
+
+@post('/assigntool')
+def addToolToJobsite():
+	itemId = request.forms.get('itemId')
+	jobName = request.forms.get('jobsiteName')
+	
+	db = sqlite3.connect('whstock.db')
+	try:
+		db.execute("UPDATE whstock SET assignedto = ? WHERE id = ?", (jobName, itemId))
+		db.commit()
+		db.close()
+		redirect('/stock')
+	except sqlite3.Error as e:
+		return template('sql_error', error=e)
+	finally:
+		db.close()
 	
 run(host='0.0.0.0', reloader=True, port=8080, debug=True)
 
